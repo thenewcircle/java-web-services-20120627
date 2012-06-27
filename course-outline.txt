@@ -1,0 +1,151 @@
+Java Web Services
+=================
+
+Marakana Outline: http://marakana.com/training/java/java_web_services.html
+
+Richardson Maturity Model
+-------------------------
+  http://www.crummy.com/writing/speaking/2008-QCon/act3.html
+
+  - Level 0: One URI, POST everything:
+      "... A little web-based peephole into some other universe, and you can only communicate with the other universe by passing messages through the peephole."
+
+  - Level 1: Multiple URIs representing distinct *resources*, POST everything.
+
+  - Level 2: Multiple URIs and multiple HTTP methods.
+      GET: "What's important is that GET has constraints on its meaning, and when there are constraints you can optimize around them: conditional GET, partial GET, reliability, cachability, and so on. This is the value of the uniform interface. Level one services don't respect these constraints."
+
+      What else to split out from POST...
+
+  - Level 3: Hypermedia as source of client flexibility
+      "Connections between resources are a form of data, and they should be described in the documents with the rest of the data. Let your clients focus on looking at that document and making decisions about what to do next. Not on internalizing your particular rules about where on the web you put your data."
+
+HTTP Methods
+------------
+  methods: http://www.w3.org/Protocols/rfc2616/rfc2616-sec5.html
+  method detail: http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html
+
+  "safe": side-effect free
+  "idempotent": side-effects (if any) of multiple identical requests are the same as one
+
+  - OPTIONS: service metadata (safe, idempotent)
+  * GET: read resource state + metadata (safe, idempotent)
+  - HEAD: read resource metadata only (safe, idempotent)
+  * PUT: create / reassign resource state (idempotent)
+  * DELETE: delete resource (idempotent)
+  * POST: mutate / update resource state
+
+HTTP Headers and Responses
+--------------------------
+  request headers: http://www.w3.org/Protocols/rfc2616/rfc2616-sec5.html
+  request header detail: http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html
+
+  - A few interesting headers:
+    Accept, Authorization, If-*
+
+  response status codes: http://www.w3.org/Protocols/rfc2616/rfc2616-sec6.html
+  response status code detail: http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html
+
+  - A few interesting status codes:
+    200 OK, 201 Created, 202 Accepted, 204 No Content
+    304 Not Modified
+    401 Unauthorized, 403 Forbidden, 404 Not Found, 405 Method Not Allowed, 412 Precondition Failed
+
+  http://wiki.basho.com/images/http-headers-status-v3.png
+
+Course Tools
+------------
+  Eclipse
+  Maven
+  Git
+  Postman (or other REST tester)
+
+JAX-RS and Jersey Intro
+-----------------------
+  Lab 0a: "Hello."
+    - SimpleServerFactory
+      Java refresher: Resources and exception handling
+    - Root Resource: @Path, @Produces, @GET, ResponseBuilder / Response
+      Java refresher: Annotations
+
+  Lab 0b: Test
+    - JUnit, Jersey Client
+
+  Lab 1a: "Hello <name>."
+    - Sub-resources: @PathParam, @QueryParam
+
+  Lab 1b: Test
+
+  Lab 2a: PUTting users
+    - Creating / updating resources: @PUT, @FormParam
+    - Handling non-existent resources: Exception mappers, Response.status(NOT_FOUND)
+
+  Lab 2b: Test
+
+  Lab 3a: POSTing users
+    - @POST
+    - Handling forbidden operations: Response.status(FORBIDDEN)
+
+  Lab 3b: Test
+
+Representations Intro
+---------------------
+  Lab 4: JAXB
+    - @XmlRootElement, @XmlAnnotation
+    - Content-type negotiation
+
+  Lab 5a: Jackson (less flexible -- no XML, only JSON -- but much faster and nicer API)
+    - @JsonProperty (no getters needed)
+
+  Lab 5b: Test
+    - @JsonCreator
+
+  Lab 6: Design and Software Architecture (representations are not your data model)
+    - Java refresher: object identity (equals, hashCode)
+    - Java refresher: immutability
+    - Functional programming with Guava: Function, Iterables.transform()
+
+  Lab 7a: Collections - User List
+    - Sub-resource locators
+
+  Lab 7b: Test
+
+  Lab 8a: Summaries (let some fields be null)
+    - Configuration: JAX-RS @Provider, Jackson ContextResolver and ObjectMapper
+    - Modify representation builder to accept a boolean "summary" param
+
+  Lab 8b: Test
+
+  Lab 9a: Review - implement and test posts
+  Lab 9b: Review - implement and test stream
+  Lab 9c: Test
+
+Still Not RESTful!
+------------------
+
+  HATEOAS review
+  "Structural" vs. "Transitional" Links
+    - Links in the representation (the response body)
+    - Links in the header: http://tools.ietf.org/html/rfc5988
+
+  Lab 10: Create a base resource
+    - Regular expressions in @Path
+    - @OPTIONS method
+
+  Lab 11a: Link individual user, individual post
+    - Configuration: Jersey ResourceConfigurator and LinkFilter
+    - @Links, @Link, @Ref
+
+  Lab 11b: Link collections
+    - @Context, UriInfo
+
+  Lab 11c: Test
+
+Real-World Recipes
+------------------
+  Lab 12: Paginating Collections
+
+  Lab 13: Conditional GET
+    - hashCode() as Etag
+
+  Lab 14: Transactions
