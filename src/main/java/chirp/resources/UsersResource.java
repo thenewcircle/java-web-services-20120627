@@ -10,21 +10,26 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriBuilder;
 
+import chirp.representations.UserRepresentation;
+
 @Path("/users")
 public class UsersResource {
 
-	private static Map<String, String> users = new HashMap<String, String>();
+	private static Map<String, UserRepresentation> users = new HashMap<String, UserRepresentation>();
 
 	@GET
 	@Path("{username}")
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public Response getUser(@PathParam("username") String username) {
-		String realname = users.get(username);
-		if (realname != null) {
-			return Response.ok(realname).build();
+		UserRepresentation user = users.get(username);
+		if (user != null) {
+			return Response.ok(user).build();
 		} else {
 			return Response.status(Status.NOT_FOUND).build();
 		}
@@ -35,7 +40,7 @@ public class UsersResource {
 		if (users.containsKey(username)) {
 			return Response.status(Status.FORBIDDEN).build();
 		} else {
-			users.put(username, realname);
+			users.put(username, new UserRepresentation(username, realname));
 			URI uri =
 					UriBuilder
 					.fromPath(username)
