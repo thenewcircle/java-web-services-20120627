@@ -1,17 +1,17 @@
 package chirp.representations;
 
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlRootElement;
+import org.codehaus.jackson.annotate.JsonCreator;
+import org.codehaus.jackson.annotate.JsonProperty;
 
-@XmlRootElement
 public class UserRepresentation {
 
-	@XmlAttribute private String username;
-	@XmlAttribute private String realname;
+	private final String username;
+	private final String realname;
 
-	public UserRepresentation() {}
-
-	public UserRepresentation(String username, String realname) {
+	@JsonCreator
+	public UserRepresentation(
+			@JsonProperty("username") String username,
+			@JsonProperty("realname") String realname) {
 		this.username = username;
 		this.realname = realname;
 	}

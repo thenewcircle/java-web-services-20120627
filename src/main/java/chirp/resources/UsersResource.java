@@ -25,7 +25,7 @@ public class UsersResource {
 
 	@GET
 	@Path("{username}")
-	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response getUser(@PathParam("username") String username) {
 		UserRepresentation user = users.get(username);
 		if (user != null) {
