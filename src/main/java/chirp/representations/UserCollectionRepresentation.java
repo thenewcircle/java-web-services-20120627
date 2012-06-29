@@ -1,5 +1,6 @@
 package chirp.representations;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import org.codehaus.jackson.annotate.JsonCreator;
@@ -7,12 +8,16 @@ import org.codehaus.jackson.annotate.JsonProperty;
 
 import chirp.model.User;
 
-import com.google.common.base.Function;
-import com.google.common.collect.Collections2;
-
 public class UserCollectionRepresentation {
 
 	private final Collection<UserRepresentation> users;
+
+	public UserCollectionRepresentation(boolean summary, Collection<User> users) {
+		this.users = new ArrayList<UserRepresentation>();
+		for (User user : users) {
+			this.users.add(new UserRepresentation(summary, user));
+		}
+	}
 
 	@JsonCreator
 	public UserCollectionRepresentation(
@@ -24,12 +29,4 @@ public class UserCollectionRepresentation {
 		return users;
 	}
 
-	public static Function<Collection<User>, UserCollectionRepresentation> builder() {
-		return new Function<Collection<User>, UserCollectionRepresentation>() {
-			public UserCollectionRepresentation apply(Collection<User> users) {
-				return new UserCollectionRepresentation(Collections2.transform(
-						users, UserRepresentation.builder()));
-			}
-		};
-	}
 }
