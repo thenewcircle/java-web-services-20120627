@@ -1,5 +1,6 @@
 package chirp.model;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,6 +16,10 @@ public class Application {
 			users.put(username, user);
 			return user;
 		}
+	}
+
+	public static Collection<User> getAllUsers() {
+		return users.values();
 	}
 
 	public static User getUser(String username) {

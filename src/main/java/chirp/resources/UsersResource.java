@@ -1,6 +1,7 @@
 package chirp.resources;
 
 import java.net.URI;
+import java.util.Collection;
 
 import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
@@ -15,10 +16,18 @@ import javax.ws.rs.core.UriBuilder;
 
 import chirp.model.Application;
 import chirp.model.User;
+import chirp.representations.UserCollectionRepresentation;
 import chirp.representations.UserRepresentation;
 
 @Path("/users")
 public class UsersResource {
+
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getAllUsers() {
+		Collection<User> users = Application.getAllUsers();
+		return Response.ok(new UserCollectionRepresentation(users)).build();
+	}
 
 	@GET
 	@Path("{username}")
