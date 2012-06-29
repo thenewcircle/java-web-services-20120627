@@ -10,9 +10,11 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
+import javax.ws.rs.core.UriInfo;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
@@ -34,9 +36,9 @@ public class PostsResource {
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getAllPosts() {
+	public Response getAllPosts(@Context UriInfo info) {
 		Collection<Post> posts = user.getPosts().values();
-		return Response.ok(new PostCollectionRepresentation(false, posts)).build();
+		return Response.ok(new PostCollectionRepresentation(false, posts, info.getRequestUri())).build();
 	}
 
 	@GET

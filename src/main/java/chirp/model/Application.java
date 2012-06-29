@@ -47,7 +47,7 @@ public class Application {
 	}
 
 	public static Post createPost(User user, String timestamp, String content) {
-		Post post = new Post(timestamp, content);
+		Post post = new Post(timestamp, content, user);
 		user.getPosts().put(timestamp, post);
 		return post;
 	}
