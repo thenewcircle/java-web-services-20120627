@@ -37,9 +37,24 @@ public class Application {
 		}
 	}
 
-	public static Post createPost(User user, String content) {
-		Post post = new Post(content);
-		user.getPosts().put(post.getTimestamp(), post);
+	public static Post getPost(User user, String timestamp) {
+		Post post = user.getPosts().get(timestamp);
+		if (post == null) {
+			throw new NoSuchEntityError();
+		} else {
+			return post;
+		}
+	}
+
+	public static Post createPost(User user, String timestamp, String content) {
+		Post post = new Post(timestamp, content);
+		user.getPosts().put(timestamp, post);
 		return post;
+	}
+
+	public static void deletePost(User user, String timestamp) {
+		if (user.getPosts().remove(timestamp) == null) {
+			throw new NoSuchEntityError();
+		}
 	}
 }

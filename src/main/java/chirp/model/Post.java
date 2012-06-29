@@ -1,17 +1,17 @@
 package chirp.model;
 
-import org.joda.time.DateTime;
 
 public class Post {
 
-	private final DateTime timestamp = new DateTime();
+	private final String timestamp;
 	private final String content;
 
-	public Post(String content) {
+	public Post(String timestamp, String content) {
+		this.timestamp = timestamp;
 		this.content = content;
 	}
 
-	public DateTime getTimestamp() {
+	public String getTimestamp() {
 		return timestamp;
 	}
 

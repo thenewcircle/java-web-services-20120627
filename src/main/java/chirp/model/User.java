@@ -3,13 +3,11 @@ package chirp.model;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.joda.time.DateTime;
-
 public class User {
 
 	private final String username;
 	private final String realname;
-	private final Map<DateTime, Post> posts = new HashMap<DateTime, Post>();
+	private final Map<String, Post> posts = new HashMap<String, Post>();
 
 	public User(String username, String realname) {
 		this.username = username;
@@ -24,7 +22,7 @@ public class User {
 		return realname;
 	}
 
-	public Map<DateTime, Post> getPosts() {
+	public Map<String, Post> getPosts() {
 		return posts;
 	}
 

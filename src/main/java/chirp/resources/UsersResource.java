@@ -26,7 +26,7 @@ public class UsersResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getAllUsers() {
 		Collection<User> users = Application.getAllUsers();
-		return Response.ok(UserCollectionRepresentation.builder().apply(users)).build();
+		return Response.ok(new UserCollectionRepresentation(true, users)).build();
 	}
 
 	@GET
@@ -34,7 +34,7 @@ public class UsersResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getUser(@PathParam("username") String username) {
 		User user = Application.getUser(username);
-		return Response.ok(UserRepresentation.builder().apply(user)).build();
+		return Response.ok(new UserRepresentation(false, user)).build();
 	}
 
 	@POST
