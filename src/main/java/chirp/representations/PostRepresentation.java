@@ -6,10 +6,17 @@ import org.codehaus.jackson.annotate.JsonCreator;
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.annotate.JsonProperty;
 
+import com.sun.jersey.server.linking.Link;
+import com.sun.jersey.server.linking.Links;
 import com.sun.jersey.server.linking.Ref;
 
 import chirp.model.Post;
 
+@Links({
+	@Link(value=@Ref("/posts/{username}/{timestamp}"), rel="self"),
+	@Link(value=@Ref("/posts/{username}"), rel="collection"),
+	@Link(value=@Ref("/users/{username}"), rel="related")
+})
 public class PostRepresentation {
 
 	private final String timestamp;

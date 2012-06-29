@@ -9,6 +9,10 @@ import org.codehaus.jackson.annotate.JsonProperty;
 
 import chirp.model.Post;
 
+import com.sun.jersey.server.linking.Link;
+import com.sun.jersey.server.linking.Ref;
+
+@Link(value=@Ref("${instance.self}"), rel="self")
 public class PostCollectionRepresentation {
 
 	private final Collection<PostRepresentation> posts;

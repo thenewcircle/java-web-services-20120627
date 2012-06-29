@@ -7,10 +7,12 @@ import java.util.Collection;
 import org.codehaus.jackson.annotate.JsonCreator;
 import org.codehaus.jackson.annotate.JsonProperty;
 
-import com.sun.jersey.server.linking.Ref;
-
 import chirp.model.User;
 
+import com.sun.jersey.server.linking.Link;
+import com.sun.jersey.server.linking.Ref;
+
+@Link(value=@Ref("/users"), rel="self")
 public class UserCollectionRepresentation {
 
 	private final Collection<UserRepresentation> users;
