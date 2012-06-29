@@ -36,4 +36,10 @@ public class Application {
 			throw new NoSuchEntityError();
 		}
 	}
+
+	public static Post createPost(User user, String content) {
+		Post post = new Post(content);
+		user.getPosts().put(post.getTimestamp(), post);
+		return post;
+	}
 }
